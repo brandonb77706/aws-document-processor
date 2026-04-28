@@ -1,0 +1,9 @@
+.terraform/
+*.tfstate
+*.tfstate.backup
+lambda.zip
+.DS_Store
+test.txt
+phase2-test.txt
+*-test.txt
+CLAUDE.md
