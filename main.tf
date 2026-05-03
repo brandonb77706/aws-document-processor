@@ -60,6 +60,10 @@ resource "aws_lambda_function" "processor" {
   runtime          = "python3.12"
   filename         = data.archive_file.lambda_zip.output_path
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  timeout = 60
+  #more cpu usage
+  memory_size = 512
+
 
   environment {
     variables = {
@@ -87,6 +91,25 @@ resource "aws_s3_bucket_notification" "upload_trigger" {
   depends_on = [aws_lambda_permission.allow_s3]
 }
 
+resource "aws_iam_role_policy" "lambda_textract" {
+  name = "lambda-textract-call"
+  role = aws_iam_role.lambda_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "textract:DetectDocumentText"
+        Resource = "*"
+      },{
+        Effect = "Allow"
+        Action = "s3:GetObject"
+        Resource = "${aws_s3_bucket.uploads.arn}/*"
+      }
+    ]
+  })
+}
 #SQS queue for documents waiting to be processed
 resource "aws_sqs_queue" "doc_queue" {
     name = "doc-processing-queue"
