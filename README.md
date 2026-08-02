@@ -5,8 +5,8 @@ A file uploaded to S3 triggers a Lambda function, which calls Amazon Textract to
 - ✅ Phase 1: S3 → Lambda event-driven pipeline
 - ✅ Phase 2: SQS integration for decoupled processing
 - ✅ Phase 3: Textract OCR with extracted text published to queue
-- 🚧 Phase 4: VPC and networking foundation
-- ⏳ Phase 5: Containerized workers on Fargate behind an ALB
+- ✅ Phase 4: VPC and networking foundation
+- 🚧 Phase 5: Containerized workers on Fargate behind an ALB
 - ⏳ Phase 6: DynamoDB and OpenSearch for storage and search
 - ⏳ Phase 7: Frontend, HTTPS, and custom domain
 
